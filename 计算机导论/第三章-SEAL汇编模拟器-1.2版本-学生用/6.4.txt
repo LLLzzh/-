@@ -1,0 +1,29 @@
+#<python：计算十进制数的二进制形式有多少个1>
+#R1=0；R0=13
+#while R0!=0:
+#	R2=R0//2
+#	cha=R0-R2*2
+#	if cha==1:
+#		n+=1
+#	R0=R2
+#print(R1)
+
+#<汇编语言：计算十进制的二进制形式有多少个1>
+move R0,13
+move R1,0
+L1:
+sle R3,R0,0
+beqz R3,L2
+goto L3
+L2:
+div R2,R0,2
+mul R4,R2,2
+sub R5,R0,R4
+move R0,R2
+beqz R5,L1
+add R1,R1,1
+goto L1
+L3:
+_pr R1
+
+

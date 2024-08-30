@@ -1,0 +1,32 @@
+#<python:计算有多少个1>
+#n=101;L=[3,49,48,49]
+#m=0
+#i=1
+#while i <len(L):
+#	if L[i]-49==0:
+#		m+=1
+#	i=i+1
+#print(m)
+
+_data 0,[3,49,48,49]
+move R0,1
+load R2,(0)
+move R1,0
+L1:
+sle R4,R0,R2
+beqz R4,L2
+load R5,0(R0)
+sub R6,R5,49
+add R0,R0,1
+beqz R6,L3
+sub R1,R1,1
+L3:
+add R1,R1,1
+goto L1
+L2:
+_pr R1
+
+
+
+
+

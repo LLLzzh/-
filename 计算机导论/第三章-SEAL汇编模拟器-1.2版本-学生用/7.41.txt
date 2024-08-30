@@ -1,0 +1,52 @@
+#<python:找因数>
+#R0=18
+#def factors(R0):
+#	R1=R0//2;R3=2
+#	R2=R0//R3
+#	R2=R2*R3-R0
+#	while R2!=0:
+#		if R3<=R1:
+#			R3+=1
+#			R2=R0//R3
+#			R2=R2*R3-R0
+#        		else:
+#			break
+#	if R2==0：
+#		print("Factor:",R3)
+#		factors(R0//R3)
+#	if R2!=0:
+#		print("Prime Factor:",R0)
+#	print("参数R0:%d, 变量R1:%d" %(R0,R1))
+#	return
+#<seal>
+move R0,18
+Lfactors:
+div R1,R0,2
+move R3,2
+div R2,R0,R3
+mul R2,R2,R3
+sub R2,R2,R0
+L2:
+beqz R2,L3
+sle R4,R3,R1
+beqz R4,L3
+add R3,R3,1
+div R2,R0,R3
+mul R2,R2,R3
+sub R2,R2,R0
+goto L2
+L3:
+beqz R2,L4
+_pr "Prime Factor:",R0
+goto L5
+L4:
+_pr "Factor:",R3
+_pr "参数x:",R0,"参数y:",R1
+div R0,R0,R3
+goto Lfactors
+L5:
+_pr "参数x:",R0,"参数y:",R1
+
+
+
+

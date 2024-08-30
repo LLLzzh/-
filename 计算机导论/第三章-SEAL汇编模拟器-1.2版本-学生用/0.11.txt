@@ -1,0 +1,35 @@
+move R15,10000   #R15表示fp，fp = 10000
+move sp,R15      #sp = fp
+sub sp,sp,2      #sp从10000往下开辟3个空间给局部变量x，y，sp = sp-2
+
+move R2,15        #x = 5
+move R3,6        #y = 6
+
+push R3  #传参数b
+push R2  #传参数a
+
+call Ladd      #调用函数add(a,b),返回值存在R1中
+goto Lprint
+
+#add函数有两个参数a，b，将和放到R1中返回
+Ladd:  #add(a,b)
+push R15          #将旧的fp值压入栈内
+move R15,sp       #新的fp = sp
+sub sp,sp,1       #留一个空间，存放局部变量c
+push R2        #在函数中被更改，所以先存入栈内，在return之前会pop出来这个值
+push R3        #在函数中被更改，所以先存入栈内，在return之前会pop出来这个值
+load R2,1(R15)   #R2 = a
+load R3,2(R15)   #R3 = b
+add R1,R2,R3
+store -1(R15),R1    #存放 c
+
+Lreturn:
+pop R3           #返回初始的R3
+pop R2           #返回初始的R2
+move sp,R15      #sp = fp
+pop R15          #重置fp，成为旧的fp
+ret
+
+Lprint:
+_pr R1
+

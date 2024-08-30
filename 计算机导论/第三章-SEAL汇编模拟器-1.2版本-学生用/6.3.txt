@@ -1,0 +1,33 @@
+#<python代码：计算最大数>
+#L=[a,b,c]
+#if L[0]<L[1]:
+#	max=L[1]
+#else:
+#	max=L[0]
+#if max<L[2]:
+#	max=L[2]
+#else:
+#	max=max
+#print(max)
+
+
+#<seal汇编：计算最大数>
+_data 0,[17,13,6]
+
+move R0,0
+load R2,0(R0)
+load R3,1(R0)
+load R4,2(R0)
+
+slt R5,R2,R3
+beqz R5,L1
+move R1,R3
+goto L2
+L1:
+move R1,R2
+L2:
+slt R6,R1,R2
+beqz R6,L3
+move R1,R2
+L3:
+_pr R1

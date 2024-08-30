@@ -1,0 +1,42 @@
+#<python>
+#L=[20,9,12,1,100,31,5,6,29,90,10,51,21,41,23,56,64,90,98,73,73]
+#R1=L[0]
+#R2=R1
+#R3=1;
+#while R3<R2:
+#    R5=R3+1
+#    while R5<=R2:
+#        R4=L[R3]
+#        R6=L[R5]
+#        if R4>R6:
+#            L[R3]=R6
+#            L[R5]=R4
+#        R5+=1
+#    R3+=1
+#print(L)
+
+#<seal>
+_data 10,[20,9,12,1,100,31,5,6,29,90,10,51,21,41,23,56,64,90,98,73,73]
+
+load R1,(10)
+move R3,0
+
+L1:
+add R3,R3,1
+slt R2,R3,R1
+beqz R2,L2
+add R5,R3,0
+L3:
+add R5,R5,1
+sle R7,R5,R1
+beqz R7,L1
+load R4,10(R3)
+load R6,10(R5)
+slt R9,R6,R4
+beqz R9,L3
+store 10(R3),R6
+store 10(R5),R4
+goto L3
+
+L2:
+_pr (11)%20

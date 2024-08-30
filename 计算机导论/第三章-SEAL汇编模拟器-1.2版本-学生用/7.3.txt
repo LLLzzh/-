@@ -1,0 +1,46 @@
+#<python两个数求和>
+#def F(a,b):
+#      x=1
+#      y=a+b-x
+#      return(y)
+#F(2,3)
+
+#<seal>
+move R15,10000
+move sp,R15
+sub sp,sp,2
+
+move R2,2
+move R3,3
+store -1(R15),R3
+store -2(R15),R2
+
+push R3
+push R2
+
+call Ladd
+goto Lprint
+
+Ladd:
+push R15
+move R15,sp
+sub sp,sp,2
+move R4,1
+push R4
+push R2
+push R3
+load R2,2(R15)
+load R3,3(R15)
+add R1,R2,R3
+sub R1,R1,R4
+store -1(R15),R1
+
+Lreturn:
+pop R3
+pop R2
+move sp,R15
+pop R15
+ret
+
+Lprint:
+_pr R1

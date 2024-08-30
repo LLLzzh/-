@@ -1,0 +1,8 @@
+_data 10,[3,1,2,3]
+move R3,1
+move R4,2
+load R1,10(R3)
+load R2,10(R4)
+store 10(R4),R1
+store 10(R3),R2
+_pr (11)%3
