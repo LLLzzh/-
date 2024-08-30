@@ -1,0 +1,66 @@
+1.暴力枚举法：时间复杂度是O(min(a, b)))
+
+2.辗转相除法：时间复杂度不太好计算，可以近似为O(log(min(a, b)))，但是取模运算性能较差。
+
+3.更相减损术：避免了取模运算，但是算法性能不稳定，最坏时间复杂度为O(max(a, b)))
+
+4.更相减损术与移位结合：不但避免了取模运算，而且算法性能稳，时间复杂度为O(log(max(a, b)))
+#include<stdio.h>
+int gcd_1(int a,int b);
+int gcd_2(int a,int b);
+int gcd_3(int a,int b);
+void main ()
+{
+    int m,n;
+    scanf("%d %d",&m,&n);
+    int smallnumber=m<n?m:n;
+    int bignumber=m>n?m:n;
+    printf("最大公约数是%d",gcd_4(bignumber,smallnumber));
+}
+int gcd_1(int a,int b)
+{
+    if (a%b==0)
+        return b;
+    int gcd=1;
+    int i;
+    for (i=2;i<=b/2;i++)
+    {
+        if (a%i==0&&b%i==0)
+        gcd=i;
+    }
+    return gcd;
+}
+int gcd_2(int a,int b)
+{
+    if (a%b==0)
+        return b;
+    else
+        return gcd_2(b,a%b);
+}
+int gcd_3(int a,int b)
+{
+    if (a==b)
+        return a;
+    if (a<b)
+        return gcd_3(b-a,a);
+    else
+        return gcd_3(a-b,b);
+}
+int gcd_4(int a,int b)
+{
+    if (a==b)
+    return a;
+    if (a<b)
+    return (b,a);
+    else
+    {
+        if (!a&1 && !b&1)
+            return gcd_4(a>>1,b>>1)<<1;
+        else if(!a&1 && b&1)
+            return gcd_4(a>>1,b);
+        else if(a&1 && !b&1)
+            return gcd_4(a,b>>1);
+        else
+            return gcd_4(a,a-b);
+    }
+}

@@ -1,0 +1,44 @@
+输入一个十进制数 N，将它转换成 R 进制数输出。
+
+Input
+输入一个正整数 T。表示测试数据的组数。
+
+每个测试实例包含两个整数 N(32 位整数) 和 R （2<=R<=36).
+
+Output
+为每个测试实例输出转换后的数，每个输出占一行。如果 R 大于 10，则对应的数字规则参考 16 进制（比如，10 用 A 表示 ,16 用 G 表示等等）。
+
+Examples
+input
+3
+7 2
+23 12
+-4 3
+output
+111
+1B
+-11
+
+int main()
+{int T,N,R,i,j;
+char a[10];
+scanf("%d",&T);
+while(T--)
+{i=0;
+scanf("%d %d",&N,&R);
+if(N<0)
+{printf("-");
+N=-N;}
+while(N)
+{if(N%R<10)
+a[i]=N%R+'0';
+else if(N%R>=10)
+a[i]=N%R-10+'A';
+i++;
+N=N/R;}
+for(j=i-1;j>=0;j--)
+{printf("%c",a[j]);}
+printf("\n");
+}
+return 0;
+}

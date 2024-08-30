@@ -1,0 +1,51 @@
+给定一个句子，要求将其字符重新排序输出，其中的英文字母按照字母表顺序输出，其他字符的顺序和位置不变，输出后的单词长度与原句子相同。
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+第 2 T+1 行，每组测试数据一行，包括一个字符串（长度最大为 200），由英文字母（均为大写字母）及其他字符组成，由空格分开的连续字符串视作一个单词。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），然后在一行中输出重新排序后的字符串。
+
+Examples
+input
+3
+THE BREAD IS SOLD AT $10 PER POUND
+500 DONGCHUAN ROAD EAST CHINA NORMAL UNIVERSITY SHANGHAI CHINA 200241
+#9724 $500 1234
+output
+case #0:
+AAB DDDEE EH ILNO OP $10 PRR SSTTU
+case #1:
+500 AAAAAAAAC CCDD EEGG HHHHH IIIIIL MNNNNNNNOO ORRRSSST TUUVY 200241
+case #2:
+#9724 $500 1234
+
+
+
+#include<stdio.h>
+#include<string.h>
+int main(){
+	int i,j,k,T;
+	char tmp,str[210];
+	scanf("%d",&T);
+	getchar();
+	for(i=0;i<T;i++){
+		gets(str);
+		for(j=0;j<strlen(str)-1;j++){
+			if(str[j]>='A'&&str[j]<='Z'){
+				for(k=j+1;k<strlen(str);k++){
+					if(str[k]>='A'&&str[k]<='Z'&&str[j]>str[k]){
+						tmp=str[j];
+						str[j]=str[k];
+						str[k]=tmp;
+					}
+				}
+			}
+		}
+		printf("case #%d:\n",i);
+		puts(str);
+	}
+}
+Services

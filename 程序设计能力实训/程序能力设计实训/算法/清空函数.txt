@@ -1,0 +1,40 @@
+1. 需要的头文件
+
+    C中为<memory.h> 或 <string.h>
+
+    C++中为<cstring>
+
+
+
+2. 函数原型
+
+
+[cpp] view plain copy
+void * memset ( void * ptr, int value, size_t num );  
+为地址ptr开始的num个字节赋值value，注意：是逐个字节赋值，ptr开始的num个字节中的每个字节都赋值为value。
+（1） 若ptr指向char型地址，value可为任意字符值；
+
+（2） 若ptr指向非char型，如int型地址，要想赋值正确，value的值只能是-1或0，因为-1和0转化成二进制后每一位都是一样的，设int型占4个字节，则-1=0XFFFFFFFF, 0=0X00000000。
+
+例，正确赋值：
+
+
+[cpp] view plain copy
+int A[2];  
+memset(A, -1, sizeof A);  
+赋值过程如下图：
+
+
+
+由于int型占四个字节，memset的赋值方式是逐个字节赋值，因此A[0]或A[1]实际上是四个字节合在一起的值，即0XFFFFFFFF=-1。
+
+例，错误赋值：
+
+
+[cpp] view plain copy
+int A[2];  
+memset(A, 1, sizeof A);  
+赋值过程如下图：
+
+
+A[0]的值实际上是0X01010101=16843009，因此不是我们所期望的哦。

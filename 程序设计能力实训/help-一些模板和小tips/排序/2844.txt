@@ -1,0 +1,57 @@
+有 n 个 1 到 1000 之间的整数 (1≤n≤100)，对于其中重复的数字，只保留一个，把其余相同的数去掉。然后再按照指定的排序方式把这些数排序。
+
+Input
+第 1 行为字母 A 或 D，A 表示按照升序排序，D 表示按照降序排序。
+
+第 2 行开始有若干个用一个空格或换行符分隔的正整数。
+
+Output
+相互之间用一个空格分隔的经去重和排序后的正整数。最后一个数后没有空格。
+
+Examples
+input
+A
+20 40 32 67 40 20 89 300 400 15
+output
+15 20 32 40 67 89 300 400
+
+
+#include<stdio.h>
+#define N 101
+int main()
+{
+    char ch;
+    scanf("%c",&ch);
+    int val[N];
+    int i=0,n;
+    while(scanf("%d",&val[i])!=EOF){
+        i++;
+    }
+    n=i;
+    int j;
+    for(i=0;i<n;i++){
+        for(j=0;j<n-1-i;j++){
+            if(val[j]>val[j+1]){
+                int temp=val[j+1];
+                val[j+1]=val[j];
+                val[j]=temp;
+            }
+        }
+    }
+    if(ch=='A'){
+        printf("%d",val[0]);
+        for(i=1;i<n;i++){
+            if(val[i]!=val[i-1])
+                printf(" %d",val[i]);
+        }
+    }
+    else if(ch=='D'){
+        printf("%d",val[n-1]);
+        for(i=n-2;i>=0;i--){
+            if(val[i]!=val[i+1])
+                printf(" %d",val[i]);
+        }
+    }
+    printf("\n");
+    return 0;
+}

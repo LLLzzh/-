@@ -1,0 +1,184 @@
+在文件浏览器中，可以列出一个文件夹中的所有文件的相关信息（名称、大小、修改时间等）。为简化处理，本题不考虑文件夹中含有子文件夹的情况。
+
+写一个程序，按照指定信息升序排序后输出文件信息。
+
+排序命令的形式为 LIST /field
+
+其中 field 为：
+
+NAME 表示名称（包括文件名及后缀），按名称的字典序排序；
+SIZE 表示大小，按大小的字节数升序排序；
+TIME 表示修改时间，按修改时间的升序排序。
+例如：在一个文件夹中有如下文件：
+
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48              429 ScoreStat.cpp
+2011-01-25 20:11            22016 成绩统计 .doc
+2011-01-26 19:48           307200 ScoreStat++.exe
+2011-01-25 20:08           270336 ScoreStat.exe
+命令 LIST /NAME 列出的结果为：
+
+2011-01-26 19:48           307200 ScoreStat++.exe
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48              429 ScoreStat.cpp
+2011-01-25 20:08           270336 ScoreStat.exe
+2011-01-25 20:11            22016 成绩统计 .doc
+命令 LIST /SIZE 列出的结果为：
+
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48              429 ScoreStat.cpp
+2011-01-25 20:11            22016 成绩统计 .doc
+2011-01-25 20:08           270336 ScoreStat.exe
+2011-01-26 19:48           307200 ScoreStat++.exe
+命令 LIST /TIME 列出的结果为：
+
+2011-01-25 20:08           270336 ScoreStat.exe
+2011-01-25 20:11            22016 成绩统计 .doc
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48           307200 ScoreStat++.exe
+2011-01-26 19:48              429 ScoreStat.cpp
+注意：所有文件名均不相同。修改时间或大小相同的那些文件按照文件名升序排序。
+
+一个文件的信息占一行。
+
+包括 YYYY-MM-DD 格式的日期、一个空格、HH_MM 格式的时间、若干个不等数量的空格、文件大小（最大 9 位数）、一个空格、文件名（最长 63 个字符，不含空格，但可能含汉字）。
+
+Input
+第 1 行：一个整数 n （1≤n≤100），表示后面文件信息的行数。
+
+第 2 行 ~ 第 n+1 行：每行分别是每个文件的相关信息。
+
+第 n+2 行：LIST 命令
+
+可以有多组数据，n=0 表示输入结束。
+
+Output
+排序后的 n 个文件的信息。每个文件的信息占一行。格式为：日期、一个空格、时间、一个空格、文件大小（宽度为 16，右对齐）、一个空格、文件名、一个换行符。
+
+每组数据之间加一个空行，而最后一组数据后面没有空行。
+
+Examples
+input
+5
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48              429 ScoreStat.cpp
+2011-01-25 20:11            22016 成绩统计.doc
+2011-01-26 19:48           307200 ScoreStat++.exe
+2011-01-25 20:08           270336 ScoreStat.exe
+LIST /TIME
+14
+2011-03-13 16:32                0 1.txt
+2011-01-25 19:17              542 run.bat
+2011-03-13 16:29              259 stringSort01.in
+2011-03-13 16:29              259 stringSort02.in
+2011-03-13 16:29              259 stringSort03.in
+2011-03-13 16:29               62 stringSort04.in
+2011-03-13 16:30               62 stringSort05.in
+2011-03-13 16:30              115 stringSort06.in
+2011-01-25 19:36              340 stringSort07.in
+2011-01-25 19:38              373 stringSort08.in
+2011-01-25 19:39              378 stringSort09.in
+2011-01-25 19:40               43 stringSort10.in
+2011-01-26 09:15             1103 复件run.bat
+2011-03-13 16:31               12 复件复件run.bat
+LIST /NAME
+0
+output
+2011-01-25 20:08           270336 ScoreStat.exe
+2011-01-25 20:11            22016 成绩统计.doc
+2011-01-26 07:32              388 ScoreStat.c
+2011-01-26 19:48           307200 ScoreStat++.exe
+2011-01-26 19:48              429 ScoreStat.cpp
+2011-03-13 16:32                0 1.txt
+2011-01-25 19:17              542 run.bat
+2011-03-13 16:29              259 stringSort01.in
+2011-03-13 16:29              259 stringSort02.in
+2011-03-13 16:29              259 stringSort03.in
+2011-03-13 16:29               62 stringSort04.in
+2011-03-13 16:30               62 stringSort05.in
+2011-03-13 16:30              115 stringSort06.in
+2011-01-25 19:36              340 stringSort07.in
+2011-01-25 19:38              373 stringSort08.in
+2011-01-25 19:39              378 stringSort09.in
+2011-01-25 19:40               43 stringSort10.in
+2011-01-26 09:15             1103 复件run.bat
+2011-03-13 16:31               12 复件复件run.bat
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+
+typedef struct
+{
+    char TIME[20];
+    char SIZE[20];
+    char NAME[65];
+}FILES;
+int cmpt(const void *a,const void *b)
+{
+    FILES *p1=(FILES*)a,*p2=(FILES*)b;
+    if(strcmp(p1->TIME,p2->TIME)==0)
+        return strcmp(p1->NAME,p2->NAME);
+    else
+        return strcmp(p1->TIME,p2->TIME);
+}
+int cmps(const void *a,const void *b)
+{
+    FILES *p1=(FILES*)a,*p2=(FILES*)b;
+    if(strcmp(p1->SIZE,p2->SIZE)==0)
+        return strcmp(p1->NAME,p2->NAME);
+    else
+        return strcmp(p1->SIZE,p2->SIZE);
+}
+int cmpn(const void *a,const void *b)
+{
+    FILES *p1=(FILES*)a,*p2=(FILES*)b;
+        return strcmp(p1->NAME,p2->NAME);
+}
+
+int main()
+{
+    int N,n;
+    FILES file[101];
+    char cn[11],ch;
+    scanf("%d",&N);
+    getchar();
+    while(N!=0)
+    {
+        for(n=0;n<N;n++)
+        {
+             int i;
+            for(i=0;i<16;i++)
+                file[n].TIME[i]=getchar();
+                file[n].TIME[i]='\0';
+            getchar();
+
+            for(i=0;i<16;i++)
+                file[n].SIZE[i]=getchar();
+                file[n].SIZE[i]='\0';
+            getchar();
+            i=0;
+            while((ch=getchar())!='\n')
+            {
+                file[n].NAME[i]=ch;
+                i++;
+            } file[n].NAME[i]='\0';
+        }
+        int m;
+        for(m=0;m<10;m++)
+            cn[m]=getchar();
+        cn[m]='\0';
+        if(strcmp(cn,"LIST /TIME")==0)
+            qsort(file,N,sizeof(FILES),cmpt);
+        if(strcmp(cn,"LIST /SIZE")==0)
+            qsort(file,N,sizeof(FILES),cmps);
+        if(strcmp(cn,"LIST /NAME")==0)
+            qsort(file,N,sizeof(FILES),cmpn);
+        int k;
+        for(k=0;k<N;k++)
+        printf("%s %s %s\n",file[k].TIME,file[k].SIZE,file[k].NAME);
+        printf("\n");
+        scanf("%d",&N);
+        getchar();
+    }
+
+}

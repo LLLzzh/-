@@ -1,0 +1,62 @@
+有 n （1≤n≤100）个学生的成绩记录，其中包含学号和成绩两项。按照成绩从高到低顺序输出成绩及格（≥60）学生的学号和成绩。成绩相同时按照学号从小到大顺序输出。
+
+Input
+第 1 行：输入一个整数 n，表示学生记录数。
+
+第 2 行 ～ n+1 行：每行是学号（11 位数字）及成绩（0 到 100 之间的整数）。学号和成绩之间有一个空格。
+
+Output
+每行输出成绩及格学生按要求排序后以一个空格分隔的学号及成绩。
+
+Examples
+input
+5
+10002130201 90
+10002130230 80
+10002130231 85
+10002130148 48
+10002130167 90
+output
+10002130167 90
+10002130201 90
+10002130231 85
+10002130230 80
+
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int cmp ( const void *a, const void *b );
+typedef struct
+{
+    char num[13];
+    int grade;
+} score;
+int main()
+{
+    int n,i,j;
+    scanf("%d",&n);
+    score*SCORE=(score*)malloc(sizeof(score)*n);
+    for(i=0; i<n; i++)
+        scanf("%s %d",SCORE[i].num,&SCORE[i].grade);
+    qsort(SCORE,n,sizeof(SCORE[0]),cmp);
+    for(i=0; i<n; i++)
+    {
+        if(SCORE[i].grade>=60)
+            printf("%s %d\n",SCORE[i].num,SCORE[i].grade);
+        else
+            continue;
+    }
+    return 0;
+}
+int cmp( const void *a,const void *b)
+{
+    const score *c=(const score *)a;
+    const score *d=(const score *)b;
+    if(c->grade>d->grade)
+        return -1;
+    else if(c->grade==d->grade)
+        return strcmp( c->num, d->num );
+    else
+        return 1;
+}

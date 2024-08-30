@@ -1,0 +1,20 @@
+5536
+547337
+401
+773
+3788394725871
+Traceback (most recent call last):
+  File ".\answer_generator.py", line 30, in file_generator
+    solution_name)
+  File ".\answer_generator.py", line 20, in answer_generator
+    importlib.reload(solution)
+  File "D:\Software\Miniconda3\lib\importlib\__init__.py", line 169, in reload
+    _bootstrap._exec(spec, module)
+  File "<frozen importlib._bootstrap>", line 630, in _exec
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\edwin\Desktop\2018_ecnu_fall_python_final\q2\q2.py", line 13, in <module>
+    print(f(ip))
+  File "C:\Users\edwin\Desktop\2018_ecnu_fall_python_final\q2\q2.py", line 6, in f
+    if not means[n]:
+IndexError: list index out of range

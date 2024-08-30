@@ -1,0 +1,37 @@
+给你 n(n<=100) 个数，要求你把这 n 个数按照绝对值从小到大排序。
+
+多 Case，处理直到文件结束。
+
+Input
+输入一个数 n，接下来一行是 n 个整数 (-10000,10000)。
+
+Output
+排序后按照绝对值从小到大输出 n 个数，输出一行，每两个数字之间有个空格，最后一个数字后面没空格。
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+int main()
+{
+	int n;
+	while(scanf("%d", &n)!=-1)
+	{
+	   int i,j,a[n],tmp;
+	   for (i = 0; i < n; i++)
+		   scanf("%d", &a[i]);
+	   for(i=0;i<n-1;i++)
+		   for (j = 0; j < n -1- i; j++)
+		   {
+			   if (abs(a[j]) > abs(a[j + 1]))
+			   {
+				   tmp = a[j];
+				   a[j] = a[j + 1];
+				   a[j + 1] = tmp;
+			   }
+		   }
+	   for (i = 0; i < n - 1; i++)
+		   printf("%d ", a[i]);
+	   printf("%d",a[n-1]);
+	   printf("\n");
+	}
+	return 0;
+}

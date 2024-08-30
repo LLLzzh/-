@@ -1,0 +1,61 @@
+ROT13 （回转 13 位）是一种简易的替换式密码算法。它是一种在英文网络论坛用作隐藏八卦、妙句、谜题解答以及某些脏话的工具，目的是逃过版主或管理员的匆匆一瞥。ROT13 也是过去在古罗马开发的凯撒密码的一种变体。ROT13 是它自身的逆反，即：要还原成原文只要使用同一算法即可得，故同样的操作可用于加密与解密。该算法并没有提供真正密码学上的保全，故它不应该被用于需要保全的用途上。它常常被当作弱加密示例的典型。
+
+应用 ROT13 到一段文字上仅仅只需要检查字母顺序并取代它在 13 位之后的对应字母，有需要超过时则重新绕回 26 英文字母开头即可。A 换成 N、B 换成 O、依此类推到 M 换成 Z，然后串行反转：N 换成 A、O 换成 B、最后 Z 换成 M （如图所示）。只有这些出现在英文字母里的字符受影响；数字、符号、空白字符以及所有其他字符都不变。替换后的字母大小写保持不变。
+
+
+
+例如，下面的英文笑话，精华句被 ROT13 所隐匿：
+
+How can you tell an extrovert from an
+
+introvert at NSA? Va gur ryringbef,
+
+gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
+
+通过 ROT13 转换，该笑话的解答揭露如下：
+
+Ubj pna lbh gryy na rkgebireg sebz na
+
+vagebireg ng AFN? In the elevators,
+
+the extrovert looks at the OTHER guy's shoes.
+
+第二次使用 ROT13 将恢复为原文。
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+接下来共 T 行。每行为长度不超过 1000 个字符的一段文字。内含大小写字母、空格、数字和各种符号等。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等）。
+
+然后对应每个问题在一行中输出经过 ROT13 加密后的一段文字。
+
+Examples
+input
+3
+How can you tell an extrovert from an
+introvert at NSA? Va gur ryringbef,
+gur rkgebireg ybbxf ng gur BGURE thl'f fubrf.
+output
+case #0:
+Ubj pna lbh gryy na rkgebireg sebz na
+case #1:
+vagebireg ng AFN? In the elevators,
+case #2:
+the extrovert looks at the OTHER guy's shoes.
+
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    int t,n,i,j;char s[1001];
+    scanf("%d",&t);getchar();
+    for (j=0;j<t;++j) {
+    gets(s); for (i=0;i<strlen(s);++i)
+    {if (s[i]>='a'&&s[i]<='z') s[i]=(s[i]-'a'+13)%26+'a';
+    if (s[i]>='A'&&s[i]<='Z') s[i]=(s[i]-'A'+13)%26+'A';}
+    printf("case #%d:\n%s\n",j,s); }
+    return 0;
+}

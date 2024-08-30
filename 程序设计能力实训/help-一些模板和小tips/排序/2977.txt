@@ -1,0 +1,85 @@
+C 语言课程的上机考试有 M 道题目，从第 1 题至第 M 题每道题的分值为 a1,a2,…,am,( a1,a2,…,am 均为大于 0 的正整数)，现给定分数线，请编写程序输出不低于该分数线的学生人数，并将他 (她) 们的成绩按降序输出，若有多名学生考试成绩相同，则按他 (她) 们学号的升序输出。
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+对于每组测试数据：
+
+第 1 行是三个正整数：学生人数 N ( 0 < N < 500 )、考试题目数 M ( 0 < M ≤10 )、分数线 G （G>0)
+
+<g≤10000000）；
+
+第 2 行有 M 个正整数：分别为第 1 题至第 M 题的分值 a1,a2,…,am( 0a2,…,am<108)；
+
+接下来 N 行，每行给出一名学生的学号（长度为 11 的字符串，学号的第一个字符可能为 ’0’）、该学生解出的题目总数 S(S≥0)、以及这 S 道题的题号（题号由 1 到 M）。
+
+</g≤10000000）；
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等）
+
+然后首先在一行中输出不低于分数线的学生人数，接下来每行按考试成绩从高到低输出上分数线的学生的学号与成绩，其间用 1 个空格分隔。若有多名学生成绩相同，则按他 (她) 们学号的升序输出。
+
+Examples
+input
+3
+4 5 25
+10 10 12 13 15
+10091130015 3 5 1 3
+10091130013 5 2 4 1 3 5
+10091130012 2 1 2
+10091130011 3 2 3 5
+2 3 20
+10 10 10
+10101130012 0
+10101130019 2 1 2
+1 2 40
+10 30
+10101130018 1 2
+output
+case #0:
+3
+10091130013 60
+10091130011 37
+10091130015 37
+case #1:
+1
+10101130019 20
+case #2:
+0
+
+
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct{char a[11];int g;int s;}MEM;
+int cmp(const void*a,const void*b)
+{MEM *c=(MEM*)a,*d=(MEM*)b;
+int r;
+return (r=d->g-c->g)?r:strcmp(c->a,d->a);
+
+
+}
+
+int main()
+{int T,i,N,M,G,j,t,sum=0,temp,cnt;
+scanf("%d",&T);
+for(i=0;i<T;i++)
+{scanf("%d%d%d",&N,&M,&G);
+MEM stu[N],stu2[N];int p[M];
+for(j=0;j<M;j++) scanf("%d",&p[j]);
+for(j=0;j<N;j++)
+{scanf("%s",stu[j].a);scanf("%d",&stu[j].s);sum=0;
+for(t=0;t<stu[j].s;t++) {scanf("%d",&temp); sum=sum+p[temp-1];}
+stu[j].g=sum;
+}
+cnt=0;
+for(j=0;j<N;j++)
+{if(stu[j].g>=G) {stu2[cnt]=stu[j];cnt++;}
+}
+printf("case #%d:\n",i);
+printf("%d\n",cnt);
+qsort(stu2,cnt,sizeof(stu2[0]),cmp);
+for(j=0;j<cnt;j++)
+printf("%s %d\n",stu2[j].a,stu2[j].g);
+
+}
+return 0;}

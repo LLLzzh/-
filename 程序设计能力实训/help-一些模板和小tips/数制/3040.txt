@@ -1,0 +1,60 @@
+对于一个二进制串 b=bkbk-1…b1，如果对任意 i (1≤i≤k-1)，满足 bi≠bi+1，那么 b 称为非重复二进制串。给定一个正整数，输出其二进制表示中最长的非重复二进制串的长度。
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+第 2~T+1 行，每行一个十进制表示的正整数 n，(031
+
+)。
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），在接下来一行中输出 n 的二进制表示中最长的非重复二进制串的长度（前置 0 不计算在内）。
+
+Examples
+input
+3
+7
+10
+999
+output
+case #0:
+1
+case #1:
+4
+case #2:
+2
+
+#include <stdio.h>
+#include <stdlib.h>
+int solve(int n)
+{
+    int a[1001];
+    int max=1,count=1,i=0,j=1;
+    while(n!=0)
+    {
+        a[i++]=n%2;
+        n=n/2;
+    }
+    while(j!=i)
+    {
+        if(a[j]!=a[j-1])
+            count+=1;
+        else
+            count=1;
+        max=max>count?max:count;
+        j++;
+    }
+    return max;
+}
+
+int main()
+{
+    int T,t;
+    scanf("%d",&T);
+    for(t=0; t<T; t++)
+    {
+        int n;
+        scanf("%d",&n);
+        printf("case #%d:\n%d\n",t,solve(n));
+    }
+    return 0;
+}

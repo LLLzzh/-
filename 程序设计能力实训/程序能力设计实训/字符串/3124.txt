@@ -1,0 +1,118 @@
+提取英文文本中的单词，重复出现的单词只取一个，把它们按照字典顺序排序，建立为一个单词表。
+
+例如：英文文本如下：
+
+“ask not what your country can do for you,ask what you can do for your country.”
+
+提取的非重复单词为：
+
+ask not what your country can do for you
+
+排序后建立的单词表为：
+
+ask can country do for not what you your
+
+注意：
+
+(1) 单词与单词之间用空格或标点符号（逗号 (,)，句号 (.), 惊叹号 (!), 问号 (?)）分隔。
+
+(2) 提取的单词只包含 26 个英文字符。
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+接下来 T 行，每行输入一段文本，文本长度不超过 500 个字符。
+
+文本由空格，逗号 (,)，句号 (.), 惊叹号 (!), 问号 (?) 以及 26 个小写英文字符组成。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等）。
+
+然后对应每个问题 , 在一行中输出建立的单词表，单词与单词之间用一个空格分隔。最后一个单词后面没有空格。
+
+Examples
+input
+3
+ask not what your country can do for you,ask what you can do for your country.
+no enthusiasm forever,no unexpected happening of surprising and pleasing so,only silently ask myself in mind next happiness,when will come?
+let us go! let us go!a things.
+output
+case #0:
+ask can country do for not what you your
+case #1:
+and ask come enthusiasm forever happening happiness in mind myself next no of only pleasing silently so surprising unexpected when will
+case #2:
+a go let things us
+
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int mycomp(void*s1,void*s2)
+{
+    return strcmp(*(char**)s1,*(char**)s2);
+}
+int main(void)
+{
+    int T,C,j;
+    scanf("%d",&T);
+    getchar();
+    for(C=0;C<T;C++)
+    {
+        int i=0,m,n;
+        char str[200][20];
+        char *s[200];
+        char *temp;
+        do
+        {
+            if(scanf("%[a-z]",str[i])==1)
+            {
+                s[i]=str[i];
+                i++;
+            }
+        }while(getchar()!='\n');
+        qsort(s,i,sizeof(char*),mycomp);
+        printf("case #%d:\n",C);
+        for(j=1;j<i;j++)
+            if(strcmp(s[j],s[j-1]))
+                printf("%s ",s[j-1]);
+        printf("%s\n",s[j-1]);
+    }
+}
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+#include<stdlib.h>
+int cmp(const void *a,const void *b)
+{
+    return (strcmp((char*)a,(char*)b));
+}
+int main()
+{
+    int T,t;
+    char s1[510],s2[510][30];
+    scanf("%d",&T);
+    getchar();
+    for(t=0;t<T;t++)
+    {
+        gets(s1);
+        int i,j,k,len=strlen(s1);
+        for(i=0,j=0,k=0;k<len;j++,k++)
+        {
+            if(!ispunct(s1[k])&&s1[k]!=' '&&s1[k]!='\n')
+            s2[i][j]=s1[k];
+            else {if(j==0){j=-1;continue;}
+                else {s2[i][j]='\0'; i++; j=-1;}}
+        }
+        s2[i][j]='\0';
+        qsort(s2,i,sizeof(s2[0]),cmp);
+        int l;
+        printf("case #%d:\n%s",t,s2[0]);
+        for(l=1;l<=i;l++)
+            {
+                if(strcmp(s2[l],s2[l-1])!=0)
+                printf(" %s",s2[l]);
+            }
+        printf("\n");
+
+    }
+}

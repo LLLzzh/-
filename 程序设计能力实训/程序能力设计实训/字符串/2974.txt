@@ -1,0 +1,49 @@
+给定一行由若干英文单词和空格组成的字符串，统计该字符串中有效单词的个数，单词与单词之间用一个空格来分隔，其中的 the，a，an，of，for 及 and 被忽略，不作统计。
+
+Input
+第 1 行：整数 T (1≤T≤10) 为问题数。
+
+第 2 ∽ T+1 行：每一个问题中一行由若干英文单词和空格组成的字符串，字符串的长度不超过 100 个字符。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），然后在新的一行中输出统计得到的单词个数，行末尾输出一个换行符。
+
+Examples
+input
+2
+This is a sample
+Love is a lamp while friendship is the shadow
+output
+case #0:
+3
+case #1:
+7
+
+#include<stdio.h>
+#include<string.h>
+#include<ctype.h>
+int main()
+{
+    char s[102],s1[101][30],ch;
+    int T,t;
+    scanf("%d",&T);
+    getchar();
+    for(t=0;t<T;t++)
+    {
+        gets(s);
+        int i,j,k,len=strlen(s);
+        for(i=0,j=0,k=0;k<len;j++,k++)
+        {
+            if(s[k]!=' '&&s[k]!='\n')
+                s1[i][j]=tolower(s[k]);
+            else {s1[i][j]='\0';i++;j=-1;}
+        }
+        int cnt=0,l;
+        for(l=0;l<=i;l++)
+        {
+            if(strcmp(s1[l],"a")!=0&&strcmp(s1[l],"an")!=0&&strcmp(s1[l],"of")!=0&&strcmp(s1[l],"and")!=0&&strcmp(s1[l],"the")!=0&&strcmp(s1[l],"for")!=0)
+                cnt++;
+        }
+        printf("case #%d:\n%d\n",t,cnt);
+    }
+}

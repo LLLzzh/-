@@ -1,0 +1,67 @@
+计算字符串 s1 和字符串 s2 在字符串 s 中的最大间距。
+
+间距指一个字符串的尾字符与另一个字符串首字符之间的字符个数，显然间距是一个非负整数。
+
+当 s1 或 s2 没有在 s 中出现时，间距为 0。
+
+例如 : s1 为 ab, s2 为 bd, s 为 bdabbdcdabdababcccbd, 则最大间距为 14。
+
+Input
+第 1 行：整数 T (1≤T≤10) 为问题数。
+
+第 2-4 行：每行分别为字符串 s1，s2 和 s，字串长度均不超 80。
+
+后面问题的数据格式与第一个问题相同。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），然后在一行中按序输出最大间距。
+
+Examples
+input
+3
+ab
+bd
+bdabbdcdabdababcccbd
+a
+a
+aaa
+a11
+a21
+a11xa21xa11xa21xa21xa11
+output
+case #0:
+14
+case #1:
+1
+case #2:
+13
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+    int T,t,max,n1,n2,n;
+    char s1[82],s2[82],s[82];
+    char *p1,*p2,*p;
+    scanf("%d",&T);
+    for(t=0;t<T;t++)
+    {
+        scanf("%s\n%s\n%s",s1,s2,s);
+            if(strstr(s,s1)==NULL||strstr(s,s2)==NULL)n=0;
+            else {
+                p1=strstr(s,s1);
+                n1=p1-s;
+                max=0;
+                while(p2=strstr(s,s2))
+                {
+                    *p2=' ';
+                    n2=p2-s;
+                    if(n2>=max)max=n2;
+                    p=p2;
+                }
+                if(p1==p)n=0;
+                else n=((max-n1)>=0)?max-n1-strlen(s1):strlen(s)-(n1-max-1)-strlen(s1);
+            }
+        printf("case #%d:\n%d\n",t,n);
+
+    }
+}

@@ -1,0 +1,47 @@
+输入一个十进制数 N，将它转换成二进制与十六进制分别输出。
+
+Input
+第 1 行：整数 T (1≤T≤10) 为问题数。
+
+第 2 ∽ T+1 行：每一个问题中要转换的十进制数 N (0≤N≤1 000 000)。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），然后在一行中输出对应的二进制与十六进制，用空格隔开。十六进制中 10 用 A 表示，依次类推。
+
+Examples
+input
+4
+7
+17
+16
+300
+output
+case #0:
+111 7
+case #1:
+10001 11
+case #2:
+10000 10
+case #3:
+100101100 12C
+
+#include<stdio.h>
+void f(int n)
+{
+	if(n>2)f(n/2);
+	if(n==2)printf("1");
+	printf("%d",n%2);
+}
+int main()
+{
+	int T,i,n,t;
+	scanf("%d",&T);
+	for(i=0;i<T;i++)
+	{
+		scanf("%d",&n);
+		printf("case #%d:\n",i);
+		f(n);
+		printf(" %X\n",n);
+	}
+	return 0;
+}

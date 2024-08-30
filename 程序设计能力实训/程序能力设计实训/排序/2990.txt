@@ -1,0 +1,57 @@
+现在你的导师给你了一个待排序的参考文献列表，要你排好序给他。 文献列表中每一条文献记录只占一行。排序的规则和 string 类型字符串的比较规则一致（在排序时如果该字符串中包含大写字母，则当作小写字母处理，保证没有相同大小的字符串，但是输出结果不能改变任一字符串），按升序排列。
+
+Input
+第 1 行：一个整数 $T$ ($1 \le T \le 10$) 为问题数。 对于每组测试数据：每组第一行包括一个整数 n,（1<=n<=200），接下来有 n 行，每行包括一行文献记录，文献记录的长度 s （1<=s<=200）。
+
+Output
+对每组输入，输出一行问题的编号（0 开始编号，格式：case #0: 等）然后输出排好序的文献记录。
+
+Examples
+input
+3
+3
+abc hello!
+Abc hellz!
+bbc hello!
+2
+Acc hello!
+Abc hellz!
+3
+Abc Hi!
+abc Hallo!
+aAc hello!
+output
+case #0:
+abc hello!
+Abc hellz!
+bbc hello!
+case #1:
+Abc hellz!
+Acc hello!
+case #2:
+aAc hello!
+abc Hallo!
+Abc Hi!
+
+
+
+#include <stdio.h>
+#include <strings.h>
+
+int main()
+{
+    int T,n,i,j;
+    scanf("%d",&T);
+    for(j=0;j<T;j++)
+    {
+        scanf("%d\n",&n);
+        char a[n][201];
+        for(i=0;i<n;i++)
+            gets(a[i]);
+        qsort(a,n,sizeof(a[0]),strcasecmp);
+        printf("case #%d:\n",j);
+        for(i=0;i<n;i++)
+            printf("%s\n",a[i]);
+    }
+    return 0;
+}

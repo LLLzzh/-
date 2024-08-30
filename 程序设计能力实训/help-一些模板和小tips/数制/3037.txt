@@ -1,0 +1,78 @@
+请编写程序实现两个十六进制整数的加法。
+
+例如：十六进制整数 3762 和 05C3，3762+05C3 =3D25
+
+十六进制整数 CB9 和 957，CB9+957=1610
+
+
+
+Input
+第 1 行：一个整数 T (1≤T≤10) 为问题数。
+
+接下来 T 行，每行输入两个十六进制整数 n 和 m （n，m 为不超过 200 位的十六进制整数），A~F 全部为大写字母。 两个整数之间用一个空格分隔。
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等）。然后对应每个问题在一行中输出两个十六进制整数相加的结果，字母全部用大写字母。
+
+Examples
+input
+3
+3762 05C3
+CB9 957
+F 1
+output
+case #0:
+3D25
+case #1:
+1610
+case #2:
+10
+
+#include <stdio.h>
+#include <string.h>
+
+#define maxsize 2000
+
+void add(char *s,char *t,char *u){
+    int i;
+    int lens=strlen(s),lent=strlen(t);
+    int k=lens>lent?lens+1:lent+1;//+1是为了留出最高位的进位位
+    int p=lens,q=lent;
+    int cc=0;
+
+    for(i=0;i<lens;i++) {
+        if(s[i]>='A'&&s[i]<='Z') s[i]=s[i]-'A'+10;
+        else s[i]-='0';
+    }
+    for(i=0;i<lent;i++) {
+        if(t[i]>='A'&&t[i]<='Z') t[i]=t[i]-'A'+10;
+        else t[i]-='0';
+    }
+    for(i=k-1;i>=0;i--){
+        int x=0;
+        if(p>0) x+=s[--p];
+        if(q>0) x+=t[--q];
+        u[i]=(x+cc)%16;
+        if(u[i]>9) u[i]=u[i]-10+'A';
+        else u[i]+='0';
+        cc=(x+cc)/16;
+    }
+    u[k]='\0';
+    if(u[0]=='0'){
+        for(i=0;i<k;i++) u[i]=u[i+1];
+    }
+}
+
+int main()
+{
+    char str1[maxsize],str2[maxsize],sum[maxsize];
+    int n,step;
+    scanf("%d\n",&n);
+    for(step=0;step<n;step++){
+        scanf("%s %s",str1,str2);
+        add(str1,str2,sum);
+        printf("case #%d:\n",step);//注意格式，不要忘记冒号
+        puts(sum);
+    }
+    return 0;
+}

@@ -1,0 +1,47 @@
+有 N 个整数 (-1018≤整数≤1018)，要求按照整数十进制表示的最高位的值从大到小进行排序。若两个数的最高位的值相同，则按照数本身值由小到大排序。
+
+例如：100,15,0,30,7,-15,100,-100,222222222233333333 排序后的结果为 :
+
+7,30,222222222233333333,-100,-15,15,100,0。
+
+Input
+第 1 行：整数 T (1≤T≤10) 为问题数
+
+第 2 行：第一个问题中的 N(1≤N≤10000)
+
+第 3 行：N 个待排序的整数 (-1018≤数≤1018)，每两个数之间由一个空格分隔
+
+第 4 ∽ 2*T+1 行：后面问题的数据，格式与第 1 个问题相同
+
+Output
+对于每个问题，输出一行问题的编号（0 开始编号，格式：case #0: 等），然后在一行中输出排序后的数。格式：以一个空格分隔每两个数。最后一个数之后没有空格。
+
+
+int cmp(long long *a,long long *b)
+{ long long m,n;
+  if(*a<0) m=-*a;
+  else m=*a;
+  if(*b<0) n=-*b;
+  else n=*b;
+  for(;m/10!=0;m=m/10);
+  for(;n/10!=0;n=n/10);
+  if(m!=n) return n-m;
+  else if(*a<*b) return -1;
+       else return 1;
+}
+int main()
+{long long s[10000000];
+ int i,n,cnt,x=0;
+ scanf("%d",&n);
+ while(n--)
+ {scanf("%d",&cnt);
+ {for(i=0;i<cnt;i++)
+ scanf("%lld",&s[i]);
+ qsort(s,cnt,sizeof(s[0]),cmp);
+ printf("case #%d:\n",x++);
+ printf("%lld",s[0]);
+ for(i=1;i<cnt;i++)
+ printf(" %lld",s[i]);
+ printf("\n");}}
+ return 0;
+}
