@@ -1,0 +1,16 @@
+with(student):
+with(plots):
+f := x->x^2/4;
+x0 := 1;
+
+
+p0 := [x0,f(x0)];
+p1 := [x0+h,f(x0+h)];
+m := slope(p0,p1);
+y-p0[2]=m*(x-p0[1]);
+isolate(%,y);
+secant:=unapply(rhs(%),x);
+h_list:=[seq(3-0.1*i,i=0..29)];
+S:=seq(plot([f(x),secant(x)],x=0..4,view=[0..4,0..4],
+    title=convert(evalf[4](m),string)),h=h_list):
+display(S,insequence=true,view=[0..4,0..4]);

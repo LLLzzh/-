@@ -1,0 +1,15 @@
+f := x->3*(x+1)^(1/10)+x*sin(x)/3; a:=0; b:=2*Pi;
+     
+boxes := [seq(i, i=2..50)];
+
+with(plots): with(student):
+
+S:=seq(middlebox(f(x),x=a..b,n,title=convert(evalf[5](middlesum(f(x),
+         x=a..b,n)),string)),n=boxes):
+
+display(S, insequence=true, scaling=constrained);
+
+
+
+
+
